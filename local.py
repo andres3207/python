@@ -62,8 +62,13 @@ class Ventana(QWidget):
         print("dato recibido")
 
 
+<<<<<<< HEAD
 
 print("HOLA")
+=======
+print("algo")
+
+>>>>>>> 9d3f2e5a084442511126b3d46ac7478a94f6d6a3
 if __name__ == '__main__':
 
     app = QApplication(sys.argv)
