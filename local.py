@@ -63,7 +63,7 @@ class Ventana(QWidget):
 
 
 
-
+print("HOLA")
 if __name__ == '__main__':
 
     app = QApplication(sys.argv)
