@@ -21,7 +21,7 @@ class Ventana(QWidget):
         layout.addWidget(label)
 
         self.vista=QGraphicsView()
-        self.vista.setFixedSize(1440,900)
+        self.vista.setSceneRect(0,0,1366,768)
         self.escena=QGraphicsScene()
         self.vista.setScene(self.escena)
         layout.addWidget(self.vista)
@@ -34,6 +34,7 @@ class Ventana(QWidget):
         self.server.listen(QHostAddress.Any,1234)
         print("Listening")
         self.server.newConnection.connect(self.aceptarConexion)
+        #self.socket.readyRead.connect(self.recibido)
         self.timer1.timeout.connect(self.timer1Timeout)
 
 
@@ -46,24 +47,43 @@ class Ventana(QWidget):
     def aceptarConexion(self):
     	print("Se ha conectado un cliente")
     	self.socket=self.server.nextPendingConnection()
-    	self.timer1.setInterval(1000)
+    	self.timer1.setInterval(1)
     	self.timer1.start()
     def timer1Timeout(self):
-    	print("timeout")
-    	datos=self.socket.readAll()
-    	n=datos.size()
-    	i=0
-    	while i<n:
-    		x=datos.at(i)
-    		y=datos.at(i+1)
-    		i=i+2
-    		print("X: "+x+" Y: "+y)
-    		self.dibujar(int(x),int(y))
+        #print("timeout")
+        linea1=self.socket.readLine()
+        #linea2=self.socket.readLine()
+        if linea1!='':
+            #print(linea1)
+            #print(linea2)
+            for i in range(len(linea1)):
+                if linea1[i]==",":
+                    coma=i
+                    break
+            X=linea1[0:coma]
+            Y=linea1[coma+1:len(linea1)-1]
+            #print(X)
+            #print(Y)
+            if(int(X)==2000):
+                print("fin")
+            else:
+                self.dibujar(int(X),int(Y))
+
+    	#datos=self.socket.readAll()
+    	#n=datos.size()
+    	#i=0
+    	#while i<n:
+    	#	x=datos.at(i)
+    	#	y=datos.at(i+1)
+    	#	i=i+2
+    	#	print("X: "+x+" Y: "+y)
+    	#	self.dibujar(int(x),int(y))
     	#print(n)
 
     def timerEvent(self,QTimerEvent):
     	print("Timer")
-
+    def recibido(self):
+        print("dato recibido")
 
 
 
