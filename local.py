@@ -62,7 +62,7 @@ class Ventana(QWidget):
         print("dato recibido")
 
 
-
+print("algo")
 
 if __name__ == '__main__':
 
